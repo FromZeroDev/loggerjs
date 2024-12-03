@@ -1,0 +1,11 @@
+{
+  "name": "loggerjs",
+  "version": "1.0.0",
+  "type": "module",
+  "types": "./types/index.d.ts",
+  "main": "./src/index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "description": ""
+}
