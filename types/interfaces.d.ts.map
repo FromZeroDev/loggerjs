@@ -1,1 +1,1 @@
-{"version":3,"file":"interfaces.d.ts","sourceRoot":"","sources":["../src/interfaces.js"],"names":[],"mappings":"AAEA;IACI;;;;;OAKG;IACH,kBAFc,MAAM,CAEN;CACjB;AAED;IACI;;;;OAIG;IACH,eAFY,MAAM,QAED;CACpB"}
+{"version":3,"file":"interfaces.d.ts","sourceRoot":"","sources":["../src/interfaces.js"],"names":[],"mappings":"AAEA;IACI;;;;OAIG;IACH,uBAAc;CACjB;AAED;IACI;;OAEG;IACH,0BAAiB;CACpB"}

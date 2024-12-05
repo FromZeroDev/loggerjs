@@ -18,16 +18,25 @@ export class Scope {
     level: "error" | "warn" | "info" | "debug" | "trace";
     type: string;
 }
+export class Pipeline {
+    /**
+     *
+     * @param {Formatter} formatter
+     * @param {Output[]} outputs
+     */
+    constructor(formatter: Formatter, outputs: Output[]);
+    formatter: Formatter;
+    output: Output[];
+    push(log_obj: any): void;
+}
 export class Logger {
     /**
      * @param { 'error' | 'warn' | 'info' | 'debug' | 'trace' } min_level
-     * @param { Output } output
-     * @param { Formatter } formatter
+     * @param { Pipeline[] } pipelines
      * @param { Scope[] } [scopes]
      */
-    constructor(min_level: 'error' | 'warn' | 'info' | 'debug' | 'trace', output: Output, formatter: Formatter, scopes?: Scope[]);
-    output: Output;
-    formatter: Formatter;
+    constructor(min_level: 'error' | 'warn' | 'info' | 'debug' | 'trace', pipelines: Pipeline[], scopes?: Scope[]);
+    pipelines: Pipeline[];
     scopes: Scope[];
     /**
      * add a scope if type is not already present
@@ -128,7 +137,7 @@ export class Log {
     stacktrace: any;
     extra: any;
 }
-import { Output } from './interfaces.js';
 import { Formatter } from './interfaces.js';
+import { Output } from './interfaces.js';
 export { Output, Formatter } from "./interfaces.js";
 //# sourceMappingURL=index.d.ts.map

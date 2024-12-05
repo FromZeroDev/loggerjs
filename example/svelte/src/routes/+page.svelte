@@ -1,6 +1,15 @@
 <script>
-    import { Logger, ConsoleOutput, Formats, Log, Scope } from "loggerjs";
-    const logger = new Logger("debug", new ConsoleOutput(), Formats.json());
+    import {
+        Logger,
+        ConsoleOutput,
+        Formats,
+        Log,
+        Scope,
+        Pipeline,
+    } from "loggerjs";
+    const logger = new Logger("debug", [
+        new Pipeline(Formats.json(), [new ConsoleOutput()]),
+    ]);
     logger.log({ message: "comida" });
     logger.log(
         new Log({

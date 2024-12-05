@@ -34,16 +34,33 @@ export class Scope {
     }
 }
 
+export class Pipeline {
+    /**
+     * 
+     * @param {Formatter} formatter 
+     * @param {Output[]} outputs 
+     */
+    constructor(formatter, outputs) {
+        this.formatter = formatter
+        this.output = outputs
+    }
+
+    push(log_obj) {
+        const f = this.formatter.format(log_obj)
+        for (const out of this.output) {
+            out.output(f)
+        }
+    }
+}
+
 export class Logger {
     /**
      * @param { 'error' | 'warn' | 'info' | 'debug' | 'trace' } min_level
-     * @param { Output } output
-     * @param { Formatter } formatter
+     * @param { Pipeline[] } pipelines
      * @param { Scope[] } [scopes]
      */
-    constructor(min_level, output, formatter, scopes) {
-        this.output = output
-        this.formatter = formatter
+    constructor(min_level, pipelines, scopes) {
+        this.pipelines = pipelines
         this.scopes = scopes
         
         if (this.scopes === undefined || this.scopes.length === 0) {
@@ -66,7 +83,7 @@ export class Logger {
      */
     add_scope(scope) {
         if (!this.#search_scope_by(scope.type)) {
-            this.scopes.push(scope);
+            this.scopes.push(scope)
         }
     }
     
@@ -96,7 +113,7 @@ export class Logger {
      */
     #check_type(level, type) {
         const scope = this.scopes.find((value) => {
-            return value.type === type;
+            return value.type === type
         })
         if (scope) {
             return Level.priority(level) >= Level.priority(scope.level)
@@ -121,7 +138,9 @@ export class Logger {
                 return
             }
         }
-        this.output.output(this.formatter.format(log_obj))
+        for (const pipe of this.pipelines) {
+            pipe.push(log_obj)
+        }
     }
 
     /**
@@ -134,7 +153,9 @@ export class Logger {
             const scope = this.scopes[i]
             new_scopes.push(new Scope(scope.level, scope.type))
         }
-        return new Logger(this.#get_default_scope_min_level(), this.output, this.formatter, new_scopes)
+        let new_pipes = Array.from(this.pipelines);
+        
+        return new Logger(this.#get_default_scope_min_level(), new_pipes, new_scopes)
     }
 
     #get_default_scope_min_level() {
@@ -168,7 +189,7 @@ export class Log {
      * @returns { Log }
      */
     static error({type, message, error, stacktrace, extra}) {
-        return new Log({level: "error", type, message, error, stacktrace, extra});
+        return new Log({level: "error", type, message, error, stacktrace, extra})
     }
     /**
      * 
@@ -176,7 +197,7 @@ export class Log {
      * @returns { Log }
      */
     static warn({type, message, error, stacktrace, extra}) {
-        return new Log({level: "warn", type, message, error, stacktrace, extra});
+        return new Log({level: "warn", type, message, error, stacktrace, extra})
     }
     /**
      * 
@@ -184,7 +205,7 @@ export class Log {
      * @returns { Log }
      */
     static info({type, message, error, stacktrace, extra}) {
-        return new Log({level: "info", type, message, error, stacktrace, extra});
+        return new Log({level: "info", type, message, error, stacktrace, extra})
     }
     /**
      * 
@@ -192,7 +213,7 @@ export class Log {
      * @returns { Log }
      */
     static debug({type, message, error, stacktrace, extra}) {
-        return new Log({level: "debug", type, message, error, stacktrace, extra});
+        return new Log({level: "debug", type, message, error, stacktrace, extra})
     }
     /**
      * 
@@ -200,7 +221,7 @@ export class Log {
      * @returns { Log }
      */
     static trace({type, message, error, stacktrace, extra}) {
-        return new Log({level: "trace", type, message, error, stacktrace, extra});
+        return new Log({level: "trace", type, message, error, stacktrace, extra})
     }
 }
 
@@ -208,20 +229,20 @@ export class Log {
  * @param {Date} date
  */
 function toIsoString(date) {
-	let tzo = -date.getTimezoneOffset();
-	let dif = tzo >= 0 ? '+' : '-';
+	let tzo = -date.getTimezoneOffset()
+	let dif = tzo >= 0 ? '+' : '-'
 	let pad = function (/** @type {number} */ num) {
-		return (num < 10 ? '0' : '') + num;
-	};
+		return (num < 10 ? '0' : '') + num
+	}
 	let pad3 = function (/** @type {number} */ num) {
 		if (num < 10) {
-			return '00' + num.toString();
+			return '00' + num.toString()
 		}
 		if (num < 100) {
-			return '0' + num.toString();
+			return '0' + num.toString()
 		}
-		return num.toString();
-	};
+		return num.toString()
+	}
 
 	return date.getFullYear() +
 		'-' + pad(date.getMonth() + 1) +
@@ -231,5 +252,5 @@ function toIsoString(date) {
 		':' + pad(date.getSeconds()) +
 		'.' + pad3(date.getMilliseconds()) +
 		dif + pad(Math.floor(Math.abs(tzo) / 60)) +
-		':' + pad(Math.abs(tzo) % 60);
+		':' + pad(Math.abs(tzo) % 60)
 }
