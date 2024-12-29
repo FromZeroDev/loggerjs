@@ -53,9 +53,9 @@ export class LokiFormat {
 
     /**
      * 
-     * @param { string } job 
+     * @param {{ job: string }} param0
      */
-    constructor(job) {
+    constructor({ job }) {
         this.job = job;
     }
 

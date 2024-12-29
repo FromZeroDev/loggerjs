@@ -18,9 +18,11 @@ export class LokiSender {
 export class LokiFormat {
     /**
      *
-     * @param { string } job
+     * @param {{ job: string }} param0
      */
-    constructor(job: string);
+    constructor({ job }: {
+        job: string;
+    });
     job: string;
     format(log_obj: any): {
         labels: {
