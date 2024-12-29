@@ -1,5 +1,6 @@
 export { Formats } from "./formatters.js";
 export { ConsoleOutput } from "./output_console.js";
+export { WriteStreamOutput } from "./output_file.js";
 export const Level: Readonly<{
     error: 4;
     warn: 3;
@@ -14,8 +15,8 @@ export class Scope {
      * @param {'error' | 'warn' | 'info' | 'debug' | 'trace'} level
      * @param { string } type
      */
-    constructor(level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type: string);
-    level: "error" | "warn" | "info" | "debug" | "trace";
+    constructor(level: "error" | "warn" | "info" | "debug" | "trace", type: string);
+    level: "trace" | "error" | "warn" | "info" | "debug";
     type: string;
 }
 export class Pipeline {
@@ -35,7 +36,7 @@ export class Logger {
      * @param { Pipeline[] } pipelines
      * @param { Scope[] } [scopes]
      */
-    constructor(min_level: 'error' | 'warn' | 'info' | 'debug' | 'trace', pipelines: Pipeline[], scopes?: Scope[]);
+    constructor(min_level: "error" | "warn" | "info" | "debug" | "trace", pipelines: Pipeline[], scopes?: Scope[]);
     pipelines: Pipeline[];
     scopes: Scope[];
     /**
@@ -48,7 +49,18 @@ export class Logger {
      * @param {Scope} scope
      */
     set_scope_level(scope: Scope): void;
-    log(log_obj: any): void;
+    /**
+     *
+     * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, stacktrace?: any, extra?: Object }} log_obj
+     */
+    log(log_obj: {
+        level: "error" | "warn" | "info" | "debug" | "trace";
+        type?: any;
+        message: string;
+        error?: any;
+        stacktrace?: any;
+        extra?: any;
+    }): void;
     /**
      * Deep clones the Logger object
      * @returns { Logger }
@@ -122,7 +134,7 @@ export class Log {
      * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, stacktrace?: any, extra?: Object }} object
      */
     constructor({ level, type, message, error, stacktrace, extra }: {
-        level: 'error' | 'warn' | 'info' | 'debug' | 'trace';
+        level: "error" | "warn" | "info" | "debug" | "trace";
         type?: any;
         message: string;
         error?: any;
@@ -130,7 +142,7 @@ export class Log {
         extra?: any;
     });
     time: any;
-    level: "error" | "warn" | "info" | "debug" | "trace";
+    level: "trace" | "error" | "warn" | "info" | "debug";
     type: any;
     message: string;
     error: any;
@@ -140,4 +152,5 @@ export class Log {
 import { Formatter } from './interfaces.js';
 import { Output } from './interfaces.js';
 export { Output, Formatter } from "./interfaces.js";
+export { LokiFormat, LokiSender } from "./loki.js";
 //# sourceMappingURL=index.d.ts.map

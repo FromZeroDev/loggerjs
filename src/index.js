@@ -2,7 +2,8 @@ import { Output, Formatter }  from './interfaces.js'
 export { Output, Formatter }  from './interfaces.js'
 export { Formats } from './formatters.js'
 export { ConsoleOutput } from './output_console.js'
-
+export { WriteStreamOutput } from './output_file.js'
+export { LokiFormat, LokiSender } from './loki.js'
 
 export const Level = Object.freeze({
     error: 4,
@@ -122,6 +123,10 @@ export class Logger {
         }
     }
 
+    /**
+     * 
+     * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, stacktrace?: any, extra?: Object }} log_obj
+     */
     log(log_obj) {
         if (log_obj.time === undefined) {
             log_obj = {
