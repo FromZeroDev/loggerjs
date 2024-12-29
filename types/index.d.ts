@@ -51,14 +51,13 @@ export class Logger {
     set_scope_level(scope: Scope): void;
     /**
      *
-     * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, stacktrace?: any, extra?: Object }} log_obj
+     * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, extra?: Object }} log_obj
      */
     log(log_obj: {
         level: "error" | "warn" | "info" | "debug" | "trace";
         type?: any;
         message: string;
         error?: any;
-        stacktrace?: any;
         extra?: any;
     }): void;
     /**
@@ -71,74 +70,68 @@ export class Logger {
 export class Log {
     /**
      *
-     * @param  { { type?: any, message: string, error?: any, stacktrace?: any, extra?: Object } } object
+     * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static error({ type, message, error, stacktrace, extra }: {
+    static error({ type, message, error, extra }: {
         type?: any;
         message: string;
         error?: any;
-        stacktrace?: any;
         extra?: any;
     }): Log;
     /**
      *
-     * @param  { { type?: any, message: string, error?: any, stacktrace?: any, extra?: Object } } object
+     * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static warn({ type, message, error, stacktrace, extra }: {
+    static warn({ type, message, error, extra }: {
         type?: any;
         message: string;
         error?: any;
-        stacktrace?: any;
         extra?: any;
     }): Log;
     /**
      *
-     * @param  { { type?: any, message: string, error?: any, stacktrace?: any, extra?: Object } } object
+     * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static info({ type, message, error, stacktrace, extra }: {
+    static info({ type, message, error, extra }: {
         type?: any;
         message: string;
         error?: any;
-        stacktrace?: any;
         extra?: any;
     }): Log;
     /**
      *
-     * @param  { { type?: any, message: string, error?: any, stacktrace?: any, extra?: Object } } object
+     * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static debug({ type, message, error, stacktrace, extra }: {
+    static debug({ type, message, error, extra }: {
         type?: any;
         message: string;
         error?: any;
-        stacktrace?: any;
         extra?: any;
     }): Log;
     /**
      *
-     * @param  { { type?: any, message: string, error?: any, stacktrace?: any, extra?: Object } } object
+     * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static trace({ type, message, error, stacktrace, extra }: {
+    static trace({ type, message, error, extra }: {
         type?: any;
         message: string;
         error?: any;
-        stacktrace?: any;
         extra?: any;
     }): Log;
     /**
      *
-     * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, stacktrace?: any, extra?: Object }} object
+     * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, extra?: Object }} object
      */
-    constructor({ level, type, message, error, stacktrace, extra }: {
+    constructor({ level, type, message, error, extra }: {
         level: "error" | "warn" | "info" | "debug" | "trace";
         type?: any;
         message: string;
         error?: any;
-        stacktrace?: any;
         extra?: any;
     });
     time: any;
@@ -146,7 +139,6 @@ export class Log {
     type: any;
     message: string;
     error: any;
-    stacktrace: any;
     extra: any;
 }
 import { Formatter } from './interfaces.js';
