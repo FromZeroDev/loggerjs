@@ -1,11 +1,5 @@
 export { Formats } from "./formatters.js";
 export { ConsoleOutput } from "./output_console.js";
-export type WriteStreamOutput = import("./output_file.js").WriteStreamOutput;
-/**
- * @typedef {import('./output_file.js').WriteStreamOutput} WriteStreamOutput
- * @type { WriteStreamOutput }
- */
-export let WriteStreamOutput: WriteStreamOutput;
 export const Level: Readonly<{
     error: 4;
     warn: 3;

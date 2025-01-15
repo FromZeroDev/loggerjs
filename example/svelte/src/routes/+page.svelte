@@ -10,7 +10,7 @@
     const logger = new Logger("debug", [
         new Pipeline(Formats.json(), [new ConsoleOutput()]),
     ]);
-    logger.log({ message: "comida" });
+    logger.log({ level: "info", message: "comida" });
     logger.log(
         new Log({
             level: "debug",
