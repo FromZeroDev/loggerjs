@@ -108,17 +108,18 @@ export class Logger {
     }
 
     /**
-     * @param {any} level
+     * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, extra?: Object }} log_obj
      * @param {any} type
      */
-    #check_type(level, type) {
+    #check_type(log_obj, type) {
         const scope = this.scopes.find((value) => {
             return value.type === type
         })
         if (scope) {
-            return Level.priority(level) >= Level.priority(scope.level)
+            return Level.priority(log_obj.level) >= Level.priority(scope.level)
         } else {
-            return false
+            log_obj.message = `WARNING: TYPE LEVEL SCOPE NOT SET FOR ${type}\n` + log_obj.message;
+            return true
         }
     }
 
