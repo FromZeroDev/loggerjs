@@ -1,5 +1,5 @@
-import { Output, Formatter }  from './interfaces.js'
-export { Output, Formatter }  from './interfaces.js'
+import { Output, Formatter } from './interfaces.js'
+export { Output, Formatter } from './interfaces.js'
 export { Formats } from './formatters.js'
 export { ConsoleOutput } from './output_console.js'
 export { WriteStreamOutput } from './output_file.js'
@@ -28,7 +28,7 @@ export class Scope {
         this.level = level
         this.type = type
     }
-    
+
     static default(level) {
         // @ts-ignore
         return new Scope(level, ScopeDefaultSymbol)
@@ -37,9 +37,9 @@ export class Scope {
 
 export class Pipeline {
     /**
-     * 
-     * @param {Formatter} formatter 
-     * @param {Output[]} outputs 
+     *
+     * @param {Formatter} formatter
+     * @param {Output[]} outputs
      */
     constructor(formatter, outputs) {
         this.formatter = formatter
@@ -63,7 +63,7 @@ export class Logger {
     constructor(min_level, pipelines, scopes) {
         this.pipelines = pipelines
         this.scopes = scopes
-        
+
         if (this.scopes === undefined || this.scopes.length === 0) {
             this.scopes = [Scope.default(min_level)]
         } else {
@@ -87,7 +87,7 @@ export class Logger {
             this.scopes.push(scope)
         }
     }
-    
+
     /**
      * set a scope if a scope with the same type is present
      * @param {Scope} scope
@@ -124,7 +124,7 @@ export class Logger {
     }
 
     /**
-     * 
+     *
      * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, extra?: Object }} log_obj
      */
     log(log_obj) {
@@ -159,12 +159,12 @@ export class Logger {
      */
     clone() {
         let new_scopes = []
-        for (let i =0; i < this.scopes.length; i++) {
+        for (let i = 0; i < this.scopes.length; i++) {
             const scope = this.scopes[i]
             new_scopes.push(new Scope(scope.level, scope.type))
         }
         let new_pipes = Array.from(this.pipelines);
-        
+
         return new Logger(this.#get_default_scope_min_level(), new_pipes, new_scopes)
     }
 
@@ -180,10 +180,10 @@ export class Logger {
 
 export class Log {
     /**
-     * 
-     * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, extra?: Object }} object 
+     *
+     * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, extra?: Object }} object
      */
-    constructor({level, type, message, error, extra}) {
+    constructor({ level, type, message, error, extra }) {
         this.time = null
         this.level = level ?? "debug"
         this.type = type
@@ -191,46 +191,46 @@ export class Log {
         this.error = error
         this.extra = extra
     }
-    
+
     /**
-     * 
+     *
      * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static error({type, message, error, extra}) {
-        return new Log({level: "error", type, message, error, extra})
+    static error({ type, message, error, extra }) {
+        return new Log({ level: "error", type, message, error, extra })
     }
     /**
-     * 
+     *
      * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static warn({type, message, error, extra}) {
-        return new Log({level: "warn", type, message, error, extra})
+    static warn({ type, message, error, extra }) {
+        return new Log({ level: "warn", type, message, error, extra })
     }
     /**
-     * 
+     *
      * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static info({type, message, error, extra}) {
-        return new Log({level: "info", type, message, error, extra})
+    static info({ type, message, error, extra }) {
+        return new Log({ level: "info", type, message, error, extra })
     }
     /**
-     * 
+     *
      * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static debug({type, message, error, extra}) {
-        return new Log({level: "debug", type, message, error, extra})
+    static debug({ type, message, error, extra }) {
+        return new Log({ level: "debug", type, message, error, extra })
     }
     /**
-     * 
+     *
      * @param  { { type?: any, message: string, error?: any, extra?: Object } } object
      * @returns { Log }
      */
-    static trace({type, message, error, extra}) {
-        return new Log({level: "trace", type, message, error, extra})
+    static trace({ type, message, error, extra }) {
+        return new Log({ level: "trace", type, message, error, extra })
     }
 }
 
@@ -238,28 +238,28 @@ export class Log {
  * @param {Date} date
  */
 function toIsoString(date) {
-	let tzo = -date.getTimezoneOffset()
-	let dif = tzo >= 0 ? '+' : '-'
-	let pad = function (/** @type {number} */ num) {
-		return (num < 10 ? '0' : '') + num
-	}
-	let pad3 = function (/** @type {number} */ num) {
-		if (num < 10) {
-			return '00' + num.toString()
-		}
-		if (num < 100) {
-			return '0' + num.toString()
-		}
-		return num.toString()
-	}
+    let tzo = -date.getTimezoneOffset()
+    let dif = tzo >= 0 ? '+' : '-'
+    let pad = function (/** @type {number} */ num) {
+        return (num < 10 ? '0' : '') + num
+    }
+    let pad3 = function (/** @type {number} */ num) {
+        if (num < 10) {
+            return '00' + num.toString()
+        }
+        if (num < 100) {
+            return '0' + num.toString()
+        }
+        return num.toString()
+    }
 
-	return date.getFullYear() +
-		'-' + pad(date.getMonth() + 1) +
-		'-' + pad(date.getDate()) +
-		'T' + pad(date.getHours()) +
-		':' + pad(date.getMinutes()) +
-		':' + pad(date.getSeconds()) +
-		'.' + pad3(date.getMilliseconds()) +
-		dif + pad(Math.floor(Math.abs(tzo) / 60)) +
-		':' + pad(Math.abs(tzo) % 60)
+    return date.getFullYear() +
+        '-' + pad(date.getMonth() + 1) +
+        '-' + pad(date.getDate()) +
+        'T' + pad(date.getHours()) +
+        ':' + pad(date.getMinutes()) +
+        ':' + pad(date.getSeconds()) +
+        '.' + pad3(date.getMilliseconds()) +
+        dif + pad(Math.floor(Math.abs(tzo) / 60)) +
+        ':' + pad(Math.abs(tzo) % 60)
 }

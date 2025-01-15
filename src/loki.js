@@ -5,8 +5,8 @@ export class LokiSender {
     url
 
     /**
-     * 
-     * @param { {url: string, username: string, password: string} } param0 
+     *
+     * @param { {url: string, username: string, password: string} } param0
      */
     constructor({ url, username, password }) {
         this.username = username
@@ -52,7 +52,7 @@ export class LokiFormat {
     job;
 
     /**
-     * 
+     *
      * @param {{ job: string }} param0
      */
     constructor({ job }) {
