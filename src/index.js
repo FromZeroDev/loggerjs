@@ -2,8 +2,16 @@ import { Output, Formatter } from './interfaces.js'
 export { Output, Formatter } from './interfaces.js'
 export { Formats } from './formatters.js'
 export { ConsoleOutput } from './output_console.js'
-export { WriteStreamOutput } from './output_file.js'
 export { LokiFormat, LokiSender } from './loki.js'
+
+/**
+ * @typedef {import('./output_file.js').WriteStreamOutput} WriteStreamOutput
+ * @type { WriteStreamOutput }
+ */
+export let WriteStreamOutput;
+if (typeof process === "object") {
+    WriteStreamOutput = await import('./output_file.js').WriteStreamOutput;
+}
 
 export const Level = Object.freeze({
     error: 4,
