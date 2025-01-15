@@ -1,3 +1,4 @@
+import {Formats} from "./formatters.js";
 
 export class LokiSender {
     username
