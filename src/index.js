@@ -139,7 +139,7 @@ export class Logger {
 
         if (log_obj.level) {
             const type = log_obj.type ?? ScopeDefaultSymbol
-            if (!this.#check_type(log_obj.level, type)) {
+            if (!this.#check_type(log_obj, type)) {
                 return
             }
         }
