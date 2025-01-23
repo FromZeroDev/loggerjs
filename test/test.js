@@ -1,4 +1,4 @@
-import { ConsoleOutput, Logger, Scope } from "../src/index.js";
+import { ConsoleOutput, Logger, Pipeline, Scope } from "../src/index.js";
 import { Formats } from "../src/formatters.js";
 import { Output } from "../src/interfaces.js";
 import { Log } from "../src/index.js";
@@ -9,16 +9,17 @@ function TestBasic() {
             super()
             this.buffer = ""
         }
-    
+
         output(logstr) {
             this.buffer = `${this.buffer}${logstr}\n`
         }
     }
     const buffer = new OutputBuffer()
-    const logger = new Logger("info", buffer, Formats.json(), []);
+    // const logger = new Logger("info", buffer, Formats.json(), []);
+    const logger = new Logger("info", [new Pipeline(Formats.json(), [buffer])]);
 
-    logger.log({message: "test message"})
-    logger.log({message: "test message 2"})
+    logger.log({ message: "test message" })
+    logger.log({ message: "test message 2" })
     logger.log(new Log({
         level: "info",
         message: "log",
@@ -28,7 +29,10 @@ function TestBasic() {
 }
 
 function TestClone() {
-    const logger = new Logger("debug", new ConsoleOutput(), Formats.json());
+    // const logger = new Logger("debug", new ConsoleOutput(), Formats.json());
+    const logger = new Logger("debug", [
+        new Pipeline(Formats.json(), [new ConsoleOutput()])
+    ]);
     logger.log({ message: "comida" });
     logger.log(
         new Log({
@@ -59,6 +63,7 @@ function TestClone() {
             level: "info",
             message: "shown",
             type: "test_scope",
+            error: new Error("error"),
         }),
     );
 }

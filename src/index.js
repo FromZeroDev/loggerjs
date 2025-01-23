@@ -146,6 +146,7 @@ export class Logger {
         if (log_obj.error) {
             if (log_obj.error instanceof Error) {
                 log_obj.stacktrace = log_obj.error.stack
+                log_obj.error = `${log_obj.error}`
             }
         }
         for (const pipe of this.pipelines) {
