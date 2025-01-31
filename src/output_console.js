@@ -1,6 +1,10 @@
 
 export class ConsoleOutput {
     output(logstr) {
-        console.log(logstr);
+        if (logstr instanceof Array) {
+            console.log(...logstr);
+        } else {
+            console.log(logstr)
+        }
     }
 }

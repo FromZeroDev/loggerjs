@@ -20,6 +20,7 @@
         // "Go to Definition" in VSCode
         "declarationMap": true,
         "skipLibCheck": true,
-        "pretty": true
+        "lib": ["es6"],
+        "pretty": true,
     }
 }

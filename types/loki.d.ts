@@ -29,7 +29,7 @@ export class LokiFormat {
             job: string;
             level: any;
         };
-        log: any[];
+        log: (string | Date)[];
     };
     #private;
 }

@@ -128,13 +128,13 @@ export class Logger {
      * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, extra?: Object }} log_obj
      */
     log(log_obj) {
-        if (log_obj.time === undefined) {
+        if (log_obj.timestamp === undefined) {
             log_obj = {
-                time: toIsoString(new Date()),
+                timestamp: toIsoString(new Date()),
                 ...log_obj
             }
-        } else if (log_obj.time === null) {
-            log_obj.time = toIsoString(new Date())
+        } else if (log_obj.timestamp === null) {
+            log_obj.timestamp = toIsoString(new Date())
         }
 
         if (log_obj.level) {
@@ -185,7 +185,7 @@ export class Log {
      * @param { { level: 'error' | 'warn' | 'info' | 'debug' | 'trace', type?: any, message: string, error?: any, extra?: Object }} object
      */
     constructor({ level, type, message, error, extra }) {
-        this.time = null
+        this.timestamp = null
         this.level = level ?? "debug"
         this.type = type
         this.message = message

@@ -15,7 +15,7 @@ export class Scope {
      * @param { string } type
      */
     constructor(level: "error" | "warn" | "info" | "debug" | "trace", type: string);
-    level: "trace" | "error" | "warn" | "info" | "debug";
+    level: "trace" | "debug" | "info" | "warn" | "error";
     type: string;
 }
 export class Pipeline {
@@ -133,8 +133,8 @@ export class Log {
         error?: any;
         extra?: any;
     });
-    time: any;
-    level: "trace" | "error" | "warn" | "info" | "debug";
+    timestamp: any;
+    level: "trace" | "debug" | "info" | "warn" | "error";
     type: any;
     message: string;
     error: any;

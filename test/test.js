@@ -15,8 +15,7 @@ function TestBasic() {
         }
     }
     const buffer = new OutputBuffer()
-    // const logger = new Logger("info", buffer, Formats.json(), []);
-    const logger = new Logger("info", [new Pipeline(Formats.json(), [buffer])]);
+    const logger = new Logger("info", [new Pipeline(Formats.pretty(), [buffer])]);
 
     logger.log({ message: "test message" })
     logger.log({ message: "test message 2" })
@@ -29,9 +28,8 @@ function TestBasic() {
 }
 
 function TestClone() {
-    // const logger = new Logger("debug", new ConsoleOutput(), Formats.json());
     const logger = new Logger("debug", [
-        new Pipeline(Formats.json(), [new ConsoleOutput()])
+        new Pipeline(Formats.pretty(), [new ConsoleOutput()])
     ]);
     logger.log({ message: "comida" });
     logger.log(
