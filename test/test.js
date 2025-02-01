@@ -61,7 +61,7 @@ function TestClone() {
             level: "info",
             message: "shown",
             type: "test_scope",
-            error: new Error("error"),
+            error: new Error("error with stacktrace"),
         }),
     );
 }

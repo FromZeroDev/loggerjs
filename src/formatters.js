@@ -54,6 +54,9 @@ class Pretty {
         if (obj.error) {
             color.str(" ")
             color.str(`${obj.error}`, { foreground: "red" })
+            if (obj.stacktrace) {
+                color.str(`\n${obj.stacktrace}`)
+            }
         }
         return color.end()
     }
