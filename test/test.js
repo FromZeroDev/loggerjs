@@ -62,6 +62,7 @@ function TestClone() {
             message: "shown",
             type: "test_scope",
             error: new Error("error with stacktrace"),
+            extra: { data: "data", obs: { a: 12, b: "data" } }
         }),
     );
 }

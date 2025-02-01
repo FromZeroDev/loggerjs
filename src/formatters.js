@@ -58,6 +58,37 @@ class Pretty {
                 color.str(`\n${obj.stacktrace}`)
             }
         }
+
+        if (obj.extra) {
+            color.str("\nExtra:\n")
+            color.str(padlines(`${string_from_extra(obj.extra)}`, 4))
+        }
+
         return color.end()
     }
+}
+
+function string_from_extra(extra) {
+    if (extra instanceof Object) {
+        return JSON.stringify(extra, null, 4)
+    } else {
+        return `${extra}`
+    }
+}
+
+/**
+*
+* @param {string} str
+* @param {number} spaces
+*/
+function padlines(str, spaces) {
+    const lines = str.split('\n')
+
+    const arr = []; arr[spaces] = ""
+    const pad = arr.join(" ")
+
+    for (let i = 0; i < lines.length; i++) {
+        lines[i] = `${pad}${lines[i]}`
+    }
+    return lines.join("\n")
 }
