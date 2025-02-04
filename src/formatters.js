@@ -37,32 +37,34 @@ class Pretty {
         color.str(" ")
 
         switch (obj.level) {
+            case undefined: {
+                break;
+            }
             case "trace": {
-                color.str(`${obj.level}`);
+                color.str(`${obj.level} `);
                 break;
             }
             case "debug": {
-                color.str(`${obj.level}`, { foreground: "blue" });
+                color.str(`${obj.level} `, { foreground: "blue" });
                 break;
             }
             case "info": {
-                color.str(`${obj.level}`, { foreground: "green" });
+                color.str(`${obj.level} `, { foreground: "green" });
                 break;
             }
             case "warn": {
-                color.str(`${obj.level}`, { foreground: "yellow" });
+                color.str(`${obj.level} `, { foreground: "yellow" });
                 break;
             }
             case "error": {
-                color.str(`${obj.level}`, { foreground: "red" });
+                color.str(`${obj.level} `, { foreground: "red" });
                 break;
             }
             default: {
-                color.str(`${obj.level}`, { foreground: "gray" });
+                color.str(`${obj.level} `, { foreground: "gray" });
                 break;
             }
         }
-        color.str(" ")
         color.str(`${obj.message}`)
 
         if (obj.error) {
