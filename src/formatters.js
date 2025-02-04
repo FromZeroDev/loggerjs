@@ -33,7 +33,7 @@ class Pretty {
 
     format(obj) {
         let color = new Color();
-        color.str(`${obj.timestamp}`, { foreground: "gray" })
+        color.str(`${this.format_date(obj.timestamp)}`, { foreground: "gray" })
         color.str(" ")
 
         switch (obj.level) {
@@ -79,6 +79,33 @@ class Pretty {
         }
 
         return color.end()
+    }
+
+    /**
+    * @param {string | any} date
+    */
+    format_date(date) {
+        if (typeof date !== 'string') {
+            return date
+        }
+        let datetime = new Date(date)
+        if (`${datetime}` === "Invalid Date") {
+            return date;
+        }
+        let pad = function (/** @type {number} */ num) {
+            return (num < 10 ? '0' : '') + num
+        }
+        let pad3 = function (/** @type {number} */ num) {
+            if (num < 10) {
+                return '00' + num.toString()
+            }
+            if (num < 100) {
+                return '0' + num.toString()
+            }
+            return num.toString()
+        }
+        return `${pad(datetime.getHours())}:${pad(datetime.getMinutes())}:`
+            + `${pad(datetime.getSeconds())}:${pad3(datetime.getMilliseconds())}`
     }
 }
 
