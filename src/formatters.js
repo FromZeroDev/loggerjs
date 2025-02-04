@@ -5,8 +5,13 @@ export class Formats {
         return new Json();
     }
 
-    static pretty() {
-        return new Pretty()
+    /**
+    * Pretty format for dev mode
+    *
+    * @param {boolean} [print_extras]
+    */
+    static pretty(print_extras) {
+        return new Pretty(print_extras)
     }
 }
 
@@ -17,6 +22,15 @@ class Json {
 }
 
 class Pretty {
+    print_extras
+
+    /**
+    * @param {boolean} [print_extras]
+    */
+    constructor(print_extras) {
+        this.print_extras = print_extras;
+    }
+
     format(obj) {
         let color = new Color();
         color.str(`${obj.timestamp}`, { foreground: "gray" })
@@ -59,7 +73,7 @@ class Pretty {
             }
         }
 
-        if (obj.extra) {
+        if (this.print_extras && obj.extra) {
             color.str("\nExtra:\n")
             color.str(padlines(`${string_from_extra(obj.extra)}`, 4))
         }
