@@ -6,12 +6,12 @@ export class Formats {
     }
 
     /**
-    * Pretty format for dev mode
-    *
-    * @param {boolean} [printExtras]
-    */
-    static pretty(printExtras) {
-        return new Pretty(printExtras)
+     * Pretty format for dev mode
+     *
+     * @param {{printExtras: boolean, printType: boolean}} [config]
+     */
+    static pretty(config) {
+        return new Pretty(config)
     }
 }
 
