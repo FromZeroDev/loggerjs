@@ -8,10 +8,10 @@ export class Formats {
     /**
     * Pretty format for dev mode
     *
-    * @param {boolean} [print_extras]
+    * @param {boolean} [printExtras]
     */
-    static pretty(print_extras) {
-        return new Pretty(print_extras)
+    static pretty(printExtras) {
+        return new Pretty(printExtras)
     }
 }
 
@@ -22,49 +22,61 @@ class Json {
 }
 
 class Pretty {
-    print_extras
+    printExtras
+    printType
 
     /**
-    * @param {boolean} [print_extras]
+    * @param {boolean} [printExtras]
+     * @param {boolean} [printType]
     */
-    constructor(print_extras) {
-        this.print_extras = print_extras;
+    constructor({
+        printExtras = false,
+        printType = false
+    }) {
+        this.printExtras = printExtras;
+        this.printType = printType;
     }
 
     format(obj) {
         let color = new Color();
-        color.str(`${this.format_date(obj.timestamp)}`, { foreground: "gray" })
-        color.str(" ")
+        color.str(`${this.formatDate(obj.timestamp)}`, { foreground: "gray" });
+        color.str(" ");
 
         switch (obj.level) {
             case undefined: {
                 break;
             }
             case "trace": {
-                color.str(`${obj.level} `);
+                color.str(`${obj.level.padEnd(5)} `);
                 break;
             }
             case "debug": {
-                color.str(`${obj.level} `, { foreground: "blue" });
+                color.str(`${obj.level.padEnd(5)} `, { foreground: "blue" });
                 break;
             }
             case "info": {
-                color.str(`${obj.level} `, { foreground: "green" });
+                color.str(`${obj.level.padEnd(5)} `, { foreground: "green" });
                 break;
             }
             case "warn": {
-                color.str(`${obj.level} `, { foreground: "yellow" });
+                color.str(`${obj.level.padEnd(5)} `, { foreground: "yellow" });
                 break;
             }
             case "error": {
-                color.str(`${obj.level} `, { foreground: "red" });
+                color.str(`${obj.level.padEnd(5)} `, { foreground: "red" });
                 break;
             }
             default: {
-                color.str(`${obj.level} `, { foreground: "gray" });
+                color.str(`${obj.level.padEnd(5)} `, { foreground: "gray" });
                 break;
             }
         }
+
+        if (this.printType && obj.type) {
+            color.str(`${obj.type}`, { foreground: "gray" });
+            color.str(" ");
+        }
+
         color.str(`${obj.message}`)
 
         if (obj.error) {
@@ -75,7 +87,7 @@ class Pretty {
             }
         }
 
-        if (this.print_extras && obj.extra) {
+        if (this.printExtras && obj.extra) {
             color.str("\nExtra:\n")
             color.str(padlines(`${string_from_extra(obj.extra)}`, 4))
         }
@@ -86,7 +98,7 @@ class Pretty {
     /**
     * @param {string | any} date
     */
-    format_date(date) {
+    formatDate(date) {
         if (typeof date !== 'string') {
             return date
         }
