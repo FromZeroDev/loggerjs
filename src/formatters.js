@@ -26,15 +26,11 @@ class Pretty {
     printType
 
     /**
-    * @param {boolean} [printExtras]
-     * @param {boolean} [printType]
-    */
-    constructor({
-        printExtras = false,
-        printType = false
-    }) {
-        this.printExtras = printExtras;
-        this.printType = printType;
+     * @param {{printExtras: boolean, printType: boolean}} [config]
+     */
+    constructor(config) {
+        this.printExtras = config.printExtras;
+        this.printType = config.printType;
     }
 
     format(obj) {
