@@ -25,6 +25,13 @@ function TestBasic() {
     }))
 
     console.log(buffer.buffer)
+
+    const bufferjson = new OutputBuffer()
+    const loggerjson = new Logger("info", [new Pipeline(Formats.json(), [bufferjson])]);
+
+    loggerjson.log({ message: "test message in json" })
+    console.log(bufferjson.buffer)
+
 }
 
 function TestClone() {
